@@ -1,0 +1,6 @@
+module WB_stage(input [36:0] pipeline_reg_in,
+					output reg_write_en,
+					output [2:0] reg_write_dest,
+					output [15:0] reg_write_data,
+					output [2:0] wb_op_dest
+					);

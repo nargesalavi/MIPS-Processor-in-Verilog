@@ -1,0 +1,10 @@
+module reg_EX(input clk, rst,
+					input [37:0] pipeline_reg_out,
+					input [2:0] ex_op_dest,
+					output [37:0] pipeline_reg_out_out,
+					output [2:0] ex_op_dest_out
+					);
+	always@(posedge clk,posedge rst)begin
+		pipeline_reg_out_out	=pipeline_reg_out;
+		ex_op_dest_out			=ex_op_dest;
+endmodule 

@@ -1,0 +1,7 @@
+module hazard_detection_unit ( input[2:0] decoding_op_src1,decoding_op_src2,ex_op_dest,mem_op_dest,wb_op_dest,
+										 output reg pipeline_stall_n);
+										 
+	pipeline_stall_n=((decoding_op_src1==ex_op_dest)||(decoding_op_src1==mem_op_dest)||(decoding_op_src1==wb_op_dest) ||
+							(decoding_op_src2==ex_op_dest)||(decoding_op_src2==mem_op_dest)||(decoding_op_src2==wb_op_dest))?
+							1'b1:1'b0;
+endmodule 

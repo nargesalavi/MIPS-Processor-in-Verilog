@@ -1,0 +1,5 @@
+module MEM_stage( input clk, rst, input[37:0] pipeline_reg_in,
+						output [36:0] pipeline_reg_out,
+						output [2:0] mem_op_dest
+						);
+	

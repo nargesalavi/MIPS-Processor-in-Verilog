@@ -1,0 +1,81 @@
+module MIPS(input clk, rst,input[15:0] reg_read_data_1,reg_read_data_2,output[7:0] pc);
+	wire[15:0] instr,reg_read_data_1,reg_read_data_2;
+	wire instr_fetch_enable,branch_enable;
+	wire[5:0] imm_branch_offset;
+	wire[7:0] pc2;
+	wire[56:0] pipeline_reg_output,pipeline_reg_in;
+	wire[2:0] reg_read_addr_1,reg_read_addr_2,decoding_op_src1,decoding_op_src2;
+	assign pc=pc2;
+	
+	IF_stage ifs( clk, rst, instr_fetch_enable,imm_branch_offset
+			,branch_enable,pc2, instr);
+	ID_stage id(clk, rst, instr_fetch_enable,
+						pipeline_reg_output,
+						//
+						instr,
+						imm_branch_offset,
+						branch_enable,
+						//
+						reg_read_addr_1,
+						reg_read_addr_2,
+						reg_read_data_1,
+						reg_read_data_2,
+						//
+						decoding_op_src1,
+						decoding_op_src2
+						
+						);
+	reg_ID id_reg(input clk, rst,
+						pipeline_reg_output,
+						input [5:0] branch_offset_imm,
+						input branch_taken,
+						reg_read_addr_1,
+						reg_read_addr_2,
+						decoding_op_src1,
+						decoding_op_src2,
+						
+						pipeline_reg_in,
+						output reg[5:0] branch_offset_imm_out,
+						output reg branch_taken_out,
+						output reg[2:0] reg_read_addr_1_out,
+						output reg[2:0] reg_read_addr_2_out,
+						output reg[2:0] decoding_op_src1_out,
+						output reg[2:0] decoding_op_src2_out
+						);
+						
+	EX_stage ex(input clk, rst,
+					//from ID_stage
+					pipeline_reg_in,
+					//to MEM_stage
+					output reg[37:0] pipeline_reg_out,
+						//[37:22] ,16bits:ex_alu_result[15:0]
+						//[21:5],17bits: mem_write_en, mem_write_data[15:0]
+						//[4:0] , 5bits: write_back_en, write_back_dest[2:0], write_back_result_mux
+					
+					//to HD_Unit
+					output [2:0] ex_op_dest
+					);
+					
+	reg_EX ex_reg(input clk, rst,
+					input [37:0] pipeline_reg_out,
+					input [2:0] ex_op_dest,
+					output [37:0] pipeline_reg_out_out,
+					output [2:0] ex_op_dest_out
+					);
+					
+	MEM_stage mem( input clk, rst, input[37:0] pipeline_reg_in,
+						output [36:0] pipeline_reg_out,
+						output [2:0] mem_op_dest
+						);
+	reg_MEM  mem_reg(input clk, rst,
+						input [36:0] pipeline_reg_out,
+						input [2:0] mem_op_dest,
+						output [36:0] pipeline_reg_out_out,
+						output [2:0] mem_op_dest_out
+						);
+	WB_stage wb(input [36:0] pipeline_reg_in,
+					output reg_write_en,
+					output [2:0] reg_write_dest,
+					output [15:0] reg_write_data,
+					output [2:0] wb_op_dest
+					);

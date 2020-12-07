@@ -1,0 +1,4 @@
+module IF_stage(input clk, input rst, instr_fetch_enable, input[5:0] imm_branch_offset
+			, input branch_enable, output reg[7:0] pc, output[15:0] instr);
+			
+	

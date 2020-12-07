@@ -1,0 +1,12 @@
+module EX_stage(input clk, rst,
+					//from ID_stage
+					input[56:0] pipeline_reg_in,
+					//to MEM_stage
+					output reg[37:0] pipeline_reg_out,
+						//[37:22] ,16bits:ex_alu_result[15:0]
+						//[21:5],17bits: mem_write_en, mem_write_data[15:0]
+						//[4:0] , 5bits: write_back_en, write_back_dest[2:0], write_back_result_mux
+					
+					//to HD_Unit
+					output [2:0] ex_op_dest
+					);

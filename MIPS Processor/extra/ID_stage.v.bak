@@ -1,0 +1,19 @@
+module ID_stage(input clk, rst, instruction_decode_en,
+						output reg[56:0] pipeline_reg_output,
+						//
+						input [15:0] instruction,
+						output [5:0] branch_offset_imm,
+						output reg branch_taken,
+						//
+						output [2:0] reg_read_addr_1,
+						output [2:0] reg_read_addr_2,
+						input [15:0] reg_read_data_1,
+						input [15:0] reg_read_data_2,
+						//
+						output [2:0] decoding_op_src1,
+						output [2:0] decoding_op_src2
+						
+						);
+endmodule
+						
+						

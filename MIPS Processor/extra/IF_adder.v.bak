@@ -1,0 +1,3 @@
+module IF_adder(input[5:0] max_out, input[7:0] PC, output[7:0] new_pc);
+	new_pc=PC+{2'b00,max_out};
+end

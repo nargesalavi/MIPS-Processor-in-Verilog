@@ -1,0 +1,14 @@
+module reg_file(input clk, rst, input rg_wrt_enable, input[2:0]rg_wrt_dest,input[15:0] rg_wrt_data, 
+				input[2:0] rg_rd_addr1,output[15:0] rg_rd_data1,input[2:0] rg_rd_addr2,output[15:0] rg_rd_data2
+				);
+				
+				reg[7:0][15:0] registers;
+				
+				assign rg_rd_data1 = data[rg_rd_addr1];
+				assign rg_rd_data2 = data[rg_rd_addr2];
+				
+				always@(posedge clk) begin
+					if(rg_wrt_enable)
+						registers[rg_wrt_dest] = rg_wrt_data;
+				end
+endmodule

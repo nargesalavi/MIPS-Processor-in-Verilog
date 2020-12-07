@@ -1,0 +1,17 @@
+module SRAM_Controller(
+			input Clock_50,
+			input Resetn,
+			input [17:0] SRAM_address,
+			input [15:0] SRAM_write_data,
+			input SRAM_we_n,
+			output [15:0] SRAM_read_data,
+			output ready,
+			
+			inout reg[15:0] SRAM_DATA,
+			output reg[17:0] SRAM_ADDRESS,
+			output reg SRAM_UB_N_O,
+			output reg SRAM_LB_N_O,
+			output reg SRAM_WE_N_O,
+			output reg SRAM_CE_N_O,
+			output reg SRAM_OE_N_O
+			);
